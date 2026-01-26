@@ -1,0 +1,16 @@
+{
+    "reports": [
+        {
+            "name": "Karan",
+            "type": "Earthquake",
+            "severity": "Low",
+            "location": "Bhubaneswar",
+            "details": "j,dsvcy,jda",
+            "mediaURL": "",
+            "lat": 20.2602964,
+            "lon": 85.8394521,
+            "id": 1758303144677
+        }
+    ],
+    "volunteers": []
+}

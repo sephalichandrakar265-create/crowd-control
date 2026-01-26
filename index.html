@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crowd-Sourced Disaster Relief Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+
+<body>
+  <header>Crowd-Sourced Disaster Relief Platform</header>
+
+  <div class="container">
+    <h2>Submit a Disaster Report</h2>
+    <form id="reportForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <select id="type" required>
+        <option value="">Select Disaster Type</option>
+        <option value="Flood">Flood</option>
+        <option value="Earthquake">Earthquake</option>
+        <option value="Cyclone">Cyclone</option>
+        <option value="Fire">Fire</option>
+        <option value="Other">Other</option>
+      </select>
+      <select id="severity" required>
+        <option value="">Select Severity</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      <input type="text" id="location" placeholder="Location (Village/City/Area)" required>
+      <textarea id="details" placeholder="Describe the situation..." rows="3" required></textarea>
+      <input type="file" id="photo" accept="image/*,video/*" capture="camera">
+      <button type="submit">Submit Report</button>
+    </form>
+
+    <h2>Live Disaster Map</h2>
+    <div id="map"></div>
+
+    <h2>Recent Reports</h2>
+    <div id="reportList" class="report-list">
+      <p>No reports submitted yet.</p>
+    </div>
+
+    <div class="volunteer-section">
+      <h2>Volunteer & Donate</h2>
+      <p>Join hands to help affected communities. Sign up as a volunteer or contribute donations to support relief
+        efforts.</p>
+      <button id="volunteerBtn">Become a Volunteer</button>
+      <button onclick="alert('Thank you for your generous donation!')">Donate</button>
+
+      <h3>Registered Volunteers</h3>
+      <ul id="volunteerList">
+        <li>No volunteers registered yet.</li>
+      </ul>
+    </div>
+
+    <div class="crisis-section">
+      <h2>CrisisCommunicator Mode</h2>
+      <p>This platform can run on rugged, GPS-enabled devices used by rescue teams.
+        In offline scenarios, data is stored locally and synced when network is restored.</p>
+      <button id="crisisBtn">Activate Crisis Mode</button>
+      <button id="syncBtn" style="display:none;">Sync Reports</button>
+      <p id="crisisStatus"></p>
+    </div>
+  </div>
+
+  <div id="volunteerModal" class="modal">
+    <div class="modal-content">
+      <h3>Volunteer Registration</h3>
+      <input type="text" id="volName" placeholder="Your Name" required>
+      <input type="text" id="volLocation" placeholder="Your Location (City/Village)" required>
+      <div class="modal-buttons">
+        <button id="volSubmit">Register</button>
+        <button id="volCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    document.getElementById("reportForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const reportData = {
+        name: document.getElementById("name").value,
+        type: document.getElementById("type").value,
+        severity: document.getElementById("severity").value,
+        location: document.getElementById("location").value,
+        details: document.getElementById("details").value
+      };
+
+      try {
+        const response = await fetch("http://localhost:3000/api/report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(reportData)
+        });
+
+        const result = await response.json();
+        console.log("✅ Server response:", result);
+
+        alert("Report submitted successfully!");
+
+      } catch (error) {
+        console.error("❌ Error submitting report:", error);
+        alert("Failed to submit report. Check console.");
+      }
+    });
+  </script>
+
+</body>
+
+</html>
