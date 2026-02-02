@@ -10,7 +10,9 @@
 </head>
 
 <body>
-  <header>Crowd-Sourced Disaster Relief Platform</header>
+  <header>Crowd-Sourced Disaster Relief Platform<br>
+  <button onclick="toggleTheme()">🌙 / ☀️</button>
+</header>
 
   <div class="container">
     <h2>Submit a Disaster Report</h2>
@@ -62,7 +64,7 @@
       <p>This platform can run on rugged, GPS-enabled devices used by rescue teams.
         In offline scenarios, data is stored locally and synced when network is restored.</p>
       <button id="crisisBtn">Activate Crisis Mode</button>
-      <button id="syncBtn" style="display:none;">Sync Reports</button>
+      <button id="syncBtn">Sync Reports</button>
       <p id="crisisStatus"></p>
     </div>
   </div>
@@ -81,6 +83,8 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="script.js"></script>
+
+  <script src="theme.js"></script>
 
   <script>
     document.getElementById("reportForm").addEventListener("submit", async function (e) {
